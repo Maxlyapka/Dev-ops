@@ -1,0 +1,6 @@
+# Custom MySQL/MariaDB client configuration for secure, automated login
+# File permissions must be strictly set to 600 (chmod 600 ~/.my.cnf)
+
+[client]
+user=root
+password="[REDACTED_SECURE_PASSWORD]"
