@@ -21,7 +21,7 @@ I installed MariaDB and made sure it is secure. It only accepts connections from
 ## Monitoring and Logging
 For monitoring, I used Zabbix 7.0 LTS. I had to troubleshoot some issues with the agents to make sure they collect data from Nginx and Apache correctly. For logs, I deployed Graylog with OpenSearch and MongoDB. A big lesson I learned here was about server resources. My server crashed with an Out-of-Memory (OOM) error because Graylog needs a lot of RAM for Java. It was a good experience in analyzing resource limits.
 
-* ## Key Challenges & Lessons Learned
+## Key Challenges & Lessons Learned
 
 **Issue:** Out-of-Memory (OOM) errors during Graylog deployment.
 **Lesson:** Gained experience in analyzing JVM heap usage and configuring resource limits.
