@@ -29,4 +29,5 @@ For monitoring, I used Zabbix 7.0 LTS. I had to troubleshoot some issues with th
 **Lesson:** Researched systemd socket activation and resolved service conflicts.
 
 [Full Project Report (UA)](project_report.md)
+
 [View Full Project Report with Screenshots (PDF)](Dev-ops(Full-project).pdf)
