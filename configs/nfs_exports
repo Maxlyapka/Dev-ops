@@ -1,0 +1,5 @@
+# NFS exports configuration for shared web content
+# Path: /var/www/shared
+# Allows read/write access for the internal subnet
+
+/var/www/shared  172.27.x.0/24(rw,sync,no_subtree_check)
