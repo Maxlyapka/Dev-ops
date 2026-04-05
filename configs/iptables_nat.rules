@@ -1,0 +1,12 @@
+# NAT configuration for internal node internet access
+# This rule allows internal nodes to reach the internet via the main server
+
+# 1. Enable IP Forwarding
+# echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# 2. Masquerade traffic from internal network (enp0s8) to WAN (enp0s3)
+iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
+# 3. Forward rules
+iptables -A FORWARD -i enp0s3 -o enp0s8 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT
