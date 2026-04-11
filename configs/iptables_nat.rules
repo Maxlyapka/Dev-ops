@@ -1,7 +1,11 @@
-# NAT configuration for internal node internet access
-# This rule allows internal nodes to reach the internet via the main server
+# ==============================================================================
+# Configuration: iptables_nat.rules
+# Description: NAT configuration for internal node internet access
+# Author: Maksym Romanov
+# ==============================================================================
 
-# 1. Enable IP Forwarding
+# 1. Enable IP Forwarding 
+# Note: Ensure net.ipv4.ip_forward=1 is set in /etc/sysctl.conf for persistence
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # 2. Masquerade traffic from internal network (enp0s8) to WAN (enp0s3)
