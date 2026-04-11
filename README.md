@@ -47,3 +47,5 @@ Installed and configured three Linux distributions: **Ubuntu**, **Rocky Linux**,
 *Note: This repository contains the configuration files and automation scripts from the full project.*
 
 [View Full Project Report with Screenshots (PDF)]()
+
+[Read this report in Ukrainian](PROJECT_DETAILS_UA.md)
