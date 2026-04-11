@@ -1,6 +1,9 @@
-/* * Source code used to compile and build a custom .deb package 
- * using 'checkinstall' tool for the DevOps project.
+/*
+ * Program: my-devops-tool
+ * Description: Custom utility compiled for .deb package creation
+ * Author: Maksym Romanov
  */
+
 #include <stdio.h>
 
 int main() {
