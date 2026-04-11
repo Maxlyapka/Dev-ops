@@ -1,5 +1,13 @@
-# NFS exports configuration for shared web content
-# Path: /var/www/shared
-# Allows read/write access for the internal subnet
+# ==============================================================================
+# Configuration: nfs_exports (for /etc/exports)
+# Description: NFS exports configuration for shared web content across the cluster
+# Author: Maksym Romanov
+# ==============================================================================
 
-/var/www/shared  172.27.x.0/24(rw,sync,no_subtree_check)
+# Shared directory path: /var/www/shared
+# Access: Read/Write for the internal cluster subnet only
+# Options: 
+#  - sync: Write changes to disk before replying
+#  - no_subtree_check: Improves reliability when a subdirectory of a filesystem is exported
+
+/var/www/shared  172.27.27.0/24(rw,sync,no_subtree_check)
