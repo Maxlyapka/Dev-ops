@@ -46,6 +46,6 @@ Installed and configured three Linux distributions: **Ubuntu**, **Rocky Linux**,
 ---
 *Note: This repository contains the configuration files and automation scripts from the full project.*
 
-[View Full Project Report with Screenshots (PDF)](DevOps_Infrastructure_Project_Maksym_Romanov.pdf)
+[View Full Project Report with Screenshots (PDF)](docs/DevOps_Infrastructure_Project_Maksym_Romanov_.pdf)
 
 [Read this report in Ukrainian](PROJECT_DETAILS_UA.md)
