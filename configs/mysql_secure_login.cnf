@@ -1,5 +1,11 @@
-# Custom MySQL/MariaDB client configuration for secure, automated login
-# File permissions must be strictly set to 600 (chmod 600 ~/.my.cnf)
+# ==============================================================================
+# Configuration: mysql_secure_login.cnf (Template for ~/.my.cnf)
+# Description: Custom MySQL/MariaDB client configuration for secure, automated login
+# Author: Maksym Romanov
+# ==============================================================================
+
+# Note: For production use, file permissions must be strictly set to 600 
+# Command: chmod 600 ~/.my.cnf
 
 [client]
 user=root
