@@ -1,33 +1,49 @@
-# Comprehensive DevOps Project Report
+# Comprehensive DevOps Cluster Project
 
 ## OS Installation and Storage Setup
-I started the project by installing three different Linux distributions: Ubuntu, Rocky Linux, and Debian. I wanted to see how they handle different storage setups. On Rocky Linux, I configured LVM by creating a volume group and a logical volume specifically for the database. On Debian, I set up Software RAID1 for the root system to make sure the data stays safe if one disk fails.
+Installed and configured three Linux distributions: **Ubuntu**, **Rocky Linux**, and **Debian**. 
+- Implemented **LVM** on Rocky Linux with a dedicated volume group for database storage.
+- Configured **Software RAID1** on Debian to ensure system redundancy and data integrity.
 
 ## Networking and Security
-I changed the default SSH port to 2222 and turned off password login. Now I only use ed25519 keys for access. I had a small issue with the new Ubuntu version because it uses socket activation for SSH, so I had to stop the socket and start the classic service instead. I also set up a devops group and configured sudoers so I don't have to work as root all the time. For the internal nodes, I configured NAT with iptables so they can access the internet through the main server.
+- **SSH Hardening:** Changed default port to `2222`, disabled password authentication, and enforced **ed25519** public key access.
+- **Service Management:** Resolved Ubuntu 24.04 SSH socket activation conflicts by migrating to the classic systemd service.
+- **Access Control:** Configured `sudoers` and specialized user groups to follow the principle of least privilege.
+- **Connectivity:** Implemented **NAT** using `iptables` to provide internet access for internal cluster nodes.
 
 ## System Recovery and Troubleshooting
-I practiced how to recover systems when they don't boot. On Debian and Rocky Linux, I learned how to reset the admin password by changing kernel parameters. I also successfully recovered a system that was stuck in the EFI Shell. I used a Live CD and chroot to reinstall the kernel and fix the bootloader.
+- Successfully practiced administrative password resets on Debian and Rocky Linux by modifying kernel parameters.
+- Recovered a non-booting system from **EFI Shell** using Live CD environments and `chroot` for bootloader repair.
 
 ## Backup Automation
-I wrote a Bash script that automatically archives important folders like /etc and /home. The script adds the current date and time to the filename so I can keep track of different versions. It automatically sends these backups to another server using SCP. I set up a cron job to run this script every night at 3:00 AM.
+- Developed a **Bash script** for automated backups of `/etc` and `/home` directories.
+- The script includes timestamped versioning and secure transfer via **SCP**.
+- Scheduled tasks via **Cron** to run nightly at 3:00 AM.
 
 ## Web Infrastructure and Load Balancing
-I built a web cluster where Nginx acts as a load balancer for two Apache servers. To keep the website files synchronized, I set up an NFS server so all nodes can share the same folder. I also added SSL certificates from Let's Encrypt and configured PHP to work with both Apache and PHP-FPM.
+- Deployed a highly available web cluster: **Nginx** acting as a Layer 7 Load Balancer for multiple **Apache** backend nodes.
+- Implemented **NFS** (Network File System) to ensure real-time content synchronization across all web nodes.
+- Secured traffic with **SSL/TLS** (Let's Encrypt) and optimized PHP performance using **PHP-FPM**.
 
 ## Database Management
-I installed MariaDB and made sure it is secure. It only accepts connections from localhost, so it's not visible to the outside world. I created a config file with 600 permissions to log in as root without typing the password in the terminal, which is much safer.
+- Deployed **MariaDB** with security hardening (`mysql_secure_installation`).
+- Configured secure internal networking by binding the service to the cluster's private interface.
+- Automated database management by configuring `.my.cnf` with restricted permissions (`600`) for passwordless administrative access.
 
 ## Monitoring and Logging
-For monitoring, I used Zabbix 7.0 LTS. I had to troubleshoot some issues with the agents to make sure they collect data from Nginx and Apache correctly. For logs, I deployed Graylog with OpenSearch and MongoDB. A big lesson I learned here was about server resources. My server crashed with an Out-of-Memory (OOM) error because Graylog needs a lot of RAM for Java. It was a good experience in analyzing resource limits.
+- **Monitoring:** Deployed **Zabbix 7.0 LTS** with custom agents to monitor Nginx and Apache health.
+- **Logging:** Implemented a centralized logging stack using **Graylog**, **OpenSearch**, and **MongoDB**.
+- **Resource Management:** Analyzed and resolved **Out-of-Memory (OOM)** errors by fine-tuning JVM heap settings for Java-based services.
 
 ## Key Challenges & Lessons Learned
 
-**Issue:** Out-of-Memory (OOM) errors during Graylog deployment.
-**Lesson:** Gained experience in analyzing JVM heap usage and configuring resource limits.
-**Issue:** SSH port conflict on Ubuntu 24.04.
-**Lesson:** Researched systemd socket activation and resolved service conflicts.
+| Issue | Solution |
+| :--- | :--- |
+| **Graylog OOM Crash** | Analyzed JVM heap usage and optimized RAM allocation limits. |
+| **SSH Port Conflict** | Researched systemd socket activation and reconfigured service listeners. |
+| **Web Syncing** | Implemented NFS to maintain a single source of truth for web content. |
 
-[Full Project Report (UA)](project_report.md)
+---
+*Note: This repository contains the configuration files and automation scripts from the full project.*
 
-[View Full Project Report with Screenshots (PDF)](Dev-ops(Full-project).pdf)
+[View Full Project Report with Screenshots (PDF)]()
