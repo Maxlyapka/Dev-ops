@@ -48,4 +48,4 @@ Installed and configured three Linux distributions: **Ubuntu**, **Rocky Linux**,
 
 [View Full Project Report with Screenshots (PDF)](docs/DevOps_Infrastructure_Project_Maksym_Romanov_.pdf)
 
-[Read this report in Ukrainian](PROJECT_DETAILS_UA.md)
+[Read this report in Ukrainian](docs/PROJECT_DETAILS_UA.md)
