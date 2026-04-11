@@ -1,4 +1,4 @@
-# Comprehensive DevOps Cluster Project
+# Comprehensive DevOps Project
 
 ## OS Installation and Storage Setup
 Installed and configured three Linux distributions: **Ubuntu**, **Rocky Linux**, and **Debian**. 
