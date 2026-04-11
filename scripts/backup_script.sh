@@ -1,20 +1,48 @@
 #!/bin/bash
-# Description: Automated backup of critical system directories.
-# Trigger: Configured to run daily at 03:00 AM via crontab.
 
-DATE_DIR=$(date +"%Y-%m-%d")
-TIME_FILE=$(date +"%H%M")
+# ==============================================================================
+# Script Name: backup_script.sh
+# Description: Automated backup of web content and database with SCP transfer
+# Author: Maksym Romanov
+# ==============================================================================
+
+# Environment Variables
+BACKUP_DIR="/archive"
+DATE=$(date +%F)
+WEB_DIR="/var/www/html"
+DB_USER="root"
+DB_PASS="dummy_pass_123" # In a real environment, use .my.cnf
+DB_NAME="Jimmy"
 REMOTE_USER="root"
-REMOTE_HOST="<NODE2_IP_ADDRESS>"
-REMOTE_DEST="/backup/$DATE_DIR"
-TEMP_DIR="/tmp/backup_temp"
+REMOTE_HOST="172.27.27.121" # Backup Server IP
+REMOTE_DIR="/remote_backups"
 
-mkdir -p $TEMP_DIR
-tar -czf $TEMP_DIR/etc_backup_${DATE_DIR}_${TIME_FILE}.tar.gz /etc 2>/dev/null
-tar -czf $TEMP_DIR/home_backup_${DATE_DIR}_${TIME_FILE}.tar.gz /home 2>/dev/null
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] Starting backup process..."
 
-ssh -p 2222 $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_DEST"
-scp -P 2222 $TEMP_DIR/*.tar.gz $REMOTE_USER@$REMOTE_HOST:$REMOTE_DEST/
+# 1. Create local backup directory (if it doesn't exist)
+mkdir -p $BACKUP_DIR
 
-rm -rf $TEMP_DIR
-echo "Backup and transfer completed successfully at $(date)"
+# 2. Backup web directory
+tar -czf $BACKUP_DIR/web_backup_$DATE.tar.gz $WEB_DIR
+echo "[+] Web directory successfully archived."
+
+# 3. Backup database (MariaDB/MySQL)
+mysqldump -u $DB_USER -p"$DB_PASS" $DB_NAME > $BACKUP_DIR/db_backup_$DATE.sql
+tar -czf $BACKUP_DIR/db_backup_$DATE.tar.gz -C $BACKUP_DIR db_backup_$DATE.sql
+rm $BACKUP_DIR/db_backup_$DATE.sql
+echo "[+] Database successfully archived."
+
+# 4. Send to remote server via SCP
+# Note: Passwordless SSH keys must be configured for cron execution
+scp $BACKUP_DIR/*_$DATE.tar.gz $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+if [ $? -eq 0 ]; then
+    echo "[+] Backups successfully transferred to remote server $REMOTE_HOST."
+else
+    echo "[-] Error: Failed to transfer files via SCP!"
+fi
+
+# 5. Backup rotation (delete files older than 7 days)
+find $BACKUP_DIR -type f -name "*.tar.gz" -mtime +7 -delete
+echo "[+] Cleanup of old backups completed."
+
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] Backup process finished successfully!"
